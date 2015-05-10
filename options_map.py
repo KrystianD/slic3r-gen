@@ -1,0 +1,16 @@
+optionsMap = {
+		"print.layer.height.first": "first_layer_height",
+		"print.layer.height.other": "layer_height",
+		"print.speed.perimeters": "perimeter_speed",
+		"print.speed.small-perimeters": "small_perimeter_speed",
+		"print.speed.external-perimeters": "external_perimeter_speed",
+		"print.speed.infill": "infill_speed",
+		"print.speed.solid-infill": "solid_infill_speed",
+		"print.speed.top-solid-infill": "",
+		"print.speed.support-material": "",
+		"print.speed.support-material-interface": "support_material_interface_speed",
+		"print.speed.bridges": "bridge_speed",
+		"print.speed.gap-fill": "gap_fill_speed",
+		"print.speed.travel": "travel_speed",
+		"print.speed.first-layer-speed": "first_layer_speed",
+		}
