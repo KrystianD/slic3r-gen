@@ -9,6 +9,8 @@ def mergeSettings(a, b):
     for k, v in b.items():
         if k == "include":
             continue
+        if k == "meta":
+            continue
         if isinstance(v, dict):
             if k not in a:
                 a[k] = {}

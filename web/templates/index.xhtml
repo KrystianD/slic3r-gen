@@ -3,13 +3,28 @@
 {% block content %}
 <form action="{{url_for('generate')}}" method="post">
 files:<br/>
+	<table>
+		<tr>
+			<td></td>
+			<td>name</td>
+			<td>category</td>
+			<td>action</td>
+		</tr>
 {% for file in files %}
-<div>
-	<input type="checkbox" name="file[]" value="{{file.name}}" />
-	<a href="{{url_for('edit', name=file.name)}}">{{ file.name|e }}</a>
-	<a href="{{ url_for('delete', name=file.name) }}"></a>
-</div>
+		<tr>
+			<td>
+# if file.state == 'ok'
+				<input type="checkbox" name="file[]" value="{{ file.name }}" {% if file.required %}disabled="disabled" checked="checked"{% endif %} />
+# else
+				invalid
+# endif
+			</td>
+			<td><a href="{{url_for('edit', name=file.name)}}">{{ file.name|e }}</a></td>
+			<td>{{ file.category }}</td>
+			<td><a href="{{ url_for('delete', name=file.name) }}">X</a></td>
+		</tr>
 {% endfor %}
+	</table>
 <input type="button" value="new file" id="newfilebtn" /><br/>
 <br/>
 Custom settings:<br/>

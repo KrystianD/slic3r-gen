@@ -62,7 +62,9 @@ def save():
 @app.route("/delete")
 def delete():
     name = request.args["name"]
-    return name
+    file = funcs.get_file_by_name(name)
+    os.unlink(file['path'])
+    return redirect(url_for('index'))
 
 @app.route("/options_list")
 def options_list():
@@ -75,7 +77,8 @@ def generate():
     custom = request.form['custom']
     session['custom'] = custom
     valid_files = funcs.get_files()
-    files = [x["path"] for x in filter(lambda x: x['name'] in files, valid_files)]
+    print("KD", valid_files)
+    files = [x["path"] for x in filter(lambda x: (x['name'] in files or x['required']) and x['state'] == 'ok', valid_files)]
     # return repr(files)
     # return "OK"
 
