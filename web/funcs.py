@@ -1,12 +1,31 @@
 import glob, os
 
-conf_dir = "configs/"
+conf_dir = os.path.abspath("configs/") + "/"
 
 def get_files():
     files = []
+    print(conf_dir)
     for path in glob.glob(conf_dir + "*.yaml"):
         files.append({
             'path': path,
-            'name': os.path.basename(path),
+            'name': os.path.basename(path).split(".")[0],
         })
     return files
+
+def get_file_by_name(name):
+    files = get_files()
+    return list(filter(lambda x: x['name'] == name, files))[0]
+
+def make_path(name):
+    path = os.path.realpath(conf_dir + "/" + name)
+    # print(path, conf_dir)
+    if not path.startswith(conf_dir):
+        raise Exception("invalid name " + name)
+
+    if not path.endswith(".yaml"):
+        if "." in path:
+            raise Exception("invalid name " + name)
+        else:
+            path += ".yaml"
+
+    return path

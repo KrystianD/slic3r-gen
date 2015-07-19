@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import yaml, argparse, os
+import yaml, argparse, os, re
 import options_map
 from io import StringIO
 
@@ -16,28 +16,31 @@ def mergeSettings(a, b):
         else:
             a[k] = v
 
-def processInclude(path):
+def processInclude(path, allow_include=False):
     path = os.path.realpath(path)
-    # if path in includedPaths:
-        # print("path {0} already included".format(path))
-        # exit(1)
+    if allow_include:
+        if path in includedPaths:
+            print("path {0} already included".format(path))
+            exit(1)
     includedPaths.append(path)
-    data = yaml.load(open(path))
+    content = fixYaml(open(path).read())
+    data = yaml.load(content)
     newData = {}
-    # if "include" in data:
-        # for incl in data["include"]:
-            # tmp = processInclude(incl + ".yaml")
-            # mergeSettings(newData, tmp)
+    if allow_include:
+        if "include" in data:
+            for incl in data["include"]:
+                tmp = processInclude(incl + ".yaml")
+                mergeSettings(newData, tmp)
     mergeSettings(newData, data)
     return newData
 
-def traverseSettings(f, v, path=""):
+def traverseSettings(f, v, path="", forSlicer=True):
     for k, v in v.items():
         spath = (path + "." + k).lstrip(".")
         if isinstance(v, dict):
-            traverseSettings(f, v, spath)
+            traverseSettings(f, v, spath, forSlicer=forSlicer)
         else:
-            processSetting(f, spath, v)
+            processSetting(f, spath, v, forSlicer=forSlicer)
 
 def convertSetting(v):
     if isinstance(v, str):
@@ -50,11 +53,12 @@ def convertSetting(v):
             return "0"
     return v
 
-def processSetting(f, k, v):
+def processSetting(f, k, v, forSlicer=True):
     if k in options_map.optionsMap:
-        slicerName = options_map.optionsMap[k]
+        if forSlicer:
+            k = options_map.optionsMap[k]
         v = convertSetting(v)
-        f.write(u"{0} = {1}\n".format(slicerName, v))
+        f.write(u"{0} = {1}\n".format(k, v))
     else:
         raise Exception("no setting " + k)
 
@@ -67,25 +71,52 @@ def makeTree(name, value):
         tree[name] = value
     return tree
 
-def generate(files, custom = ""):
+def makeValidYamlTree(tree):
+    
+    print(tree)
+    for opt in tree.keys():
+        print("A", opt)
+        if "." in opt:
+            q = makeTree(opt, tree[opt])
+            tree.update(q)
+            del tree[opt]
+
+        else:
+            if isinstance(tree[opt], dict):
+                makeValidYamlTree(tree[opt])
+
+    return tree
+
+def fixYaml(txt):
+    out = ""
+    for line in txt.split("\n"):
+        if "=" in line:
+            line = re.sub("\s*=\s*", ": ", line)
+        out += line + "\n"
+    return out
+
+def generate(files, custom="", forSlicer=True):
     data = {}
     # print(custom)
     for path in files:
         newData = processInclude(path)
         mergeSettings(data, newData)
 
-    for custom in custom.split("\n"):
-        custom = custom.strip()
-        if len(custom) == 0:
-            continue
-        (name, value) = custom.split("=", 1)
-        newData = makeTree(name, value)
-        mergeSettings(data, newData)
+    print("C", custom)
+    custom = fixYaml(custom)
+    customConfig = yaml.load(custom)
+    if customConfig is None:
+        customConfig = {}
+    print("F", customConfig)
+    customConfig = makeValidYamlTree(customConfig)
+    print("K", customConfig)
+
+    mergeSettings(data, customConfig)
     # print(data)
     # print(yaml.dump(data))
 
     f = StringIO()
-    traverseSettings(f, data)
+    traverseSettings(f, data, forSlicer=forSlicer)
     cnt = f.getvalue()
     f.close()
     return cnt

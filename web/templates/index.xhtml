@@ -1,21 +1,25 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title>slic3r</title>
-	</head>
-	<body>
-		<form action="{{url_for('generate')}}" method="post">
-		files:<br/>
-		{% for file in files %}
-		<div>
-			<input type="checkbox" name="file[]" value="{{file.name}}" />
-			<a href="{{url_for('edit', name=file.name)}}">{{ file.name|e }}</a>
-			<a href="{{ url_for('delete', name=file.name) }}"></a>
-		</div>
-		{% endfor %}
-		<textarea name="custom" cols="110" rows="10"></textarea><br/>
-		<input type="submit" value="generate" />
-		</form>
-	</body>
-</html>
+{% extends 'base.xhtml' %}
+
+{% block content %}
+<form action="{{url_for('generate')}}" method="post">
+files:<br/>
+{% for file in files %}
+<div>
+	<input type="checkbox" name="file[]" value="{{file.name}}" />
+	<a href="{{url_for('edit', name=file.name)}}">{{ file.name|e }}</a>
+	<a href="{{ url_for('delete', name=file.name) }}"></a>
+</div>
+{% endfor %}
+<input type="button" value="new file" id="newfilebtn" /><br/>
+<br/>
+Custom settings:<br/>
+<textarea name="custom" cols="110" rows="10">{{ session['custom'] }}</textarea><br/>
+<input type="submit" name="cmd" value="generate" />
+<input type="submit" name="cmd" value="preview cfg" />
+<input type="submit" name="cmd" value="preview" />
+</form>
+
+<a href="{{url_for('options_list')}}">options list</a>
+
+<script type="text/javascript" src="/static/dart/main.dart.js"></script>
+{% endblock %}
