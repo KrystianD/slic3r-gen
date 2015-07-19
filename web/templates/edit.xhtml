@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>slic3r</title>
+	</head>
+	<body>
+		<form action="{{url_for('save', name=file.name)}}" method="post">
+			<textarea name="content" rows="30" cols="80">{{ content }}</textarea>
+			<input type="submit" value="save" />
+		</form>
+	</body>
+</html>
