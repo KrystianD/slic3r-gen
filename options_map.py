@@ -40,7 +40,7 @@ optionsMap = {
     "print.infill.infill.top-bottom-pattern": "solid_fill_pattern",
     "print.infill.advanced.solid-infill-every": "solid_infill_every_layers",
     "print.infill.advanced.fill-angle": "fill_angle",
-    "print.infill.advanced.solid-infill-threshold-area": "top_infill_extrusion_width",
+    # "print.infill.advanced.solid-infill-threshold-area": "top_infill_extrusion_width",
     "print.infill.advanced.only-retract-when-crossing-perimeters": "only_retract_when_crossing_perimeters",
     "print.infill.advanced.infill-before-perimeters": "infill_first",
     "print.skirt.skirt.loops": "skirts",
@@ -61,7 +61,7 @@ optionsMap = {
     "filament.filament.filament.extrusion-multiplier": "extrusion_multiplier",
     "filament.filament.temperature.extruder.first": "first_layer_temperature",
     "filament.filament.temperature.extruder.other": "temperature",
-    "filament.filament.temperature.bed.firtst": "first_layer_bed_temperature",
+    "filament.filament.temperature.bed.first": "first_layer_bed_temperature",
     "filament.filament.temperature.bed.other": "bed_temperature",
 
     "filament.cooling.enable.always-on": "fan_always_on",
