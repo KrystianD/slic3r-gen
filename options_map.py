@@ -24,8 +24,9 @@ optionsMap = {
     "print.layer.advanced.seam-position": "seam_position",
     "print.layer.advanced.external-perimeters-first": "external_perimeters_first",
 
-    "printer.bed-size": "bed_size",
-    "printer.print-center": "print_center",
+    "printer.bed-shape": "bed_shape",
+    # "printer.bed-size": "bed_size",
+    # "printer.print-center": "print_center",
     "printer.z-offset": "z_offset",
     "printer.extruder.nozzle-diameter": "nozzle_diameter",
     "printer.extruder.retraction.length": "retract_length",
