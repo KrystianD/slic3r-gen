@@ -25,13 +25,14 @@ optionsMap = {
     "print.layer.advanced.external-perimeters-first": "external_perimeters_first",
 
     "printer.bed-shape": "bed_shape",
-    # "printer.bed-size": "bed_size",
-    # "printer.print-center": "print_center",
     "printer.z-offset": "z_offset",
     "printer.extruder.nozzle-diameter": "nozzle_diameter",
     "printer.extruder.retraction.length": "retract_length",
     "printer.extruder.retraction.lift-z": "retract_lift",
     "printer.extruder.retraction.speed": "retract_speed",
+    "printer.extruder.retraction.retract-on-layer-change": "retract_layer_change",
+    "printer.extruder.retraction.minimim-travel": "retract_before_travel",
+    "printer.extruder.retraction.extra-length": "retract_restart_extra",
 
     "printer.gcode.start": "start_gcode",
     "printer.gcode.end": "end_gcode",
