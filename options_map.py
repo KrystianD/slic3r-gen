@@ -59,6 +59,10 @@ optionsMap = {
     "print.advanced.extrusion-width.support-material": "support_material_extrusion_width",
     "print.advanced.other.threads": "threads",
 
+    "print.output.sequential.clearance-height": "extruder_clearance_height",
+    "print.output.sequential.clearance-radius": "extruder_clearance_radius",
+    "print.output.sequential.complete-objects": "complete_objects",
+
     "filament.filament.filament.diameter-mm": "filament_diameter",
     "filament.filament.filament.extrusion-multiplier": "extrusion_multiplier",
     "filament.filament.temperature.extruder.first": "first_layer_temperature",
